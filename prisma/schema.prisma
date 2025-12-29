@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EmotionTag {
+  CALM
+  ENDURE
+  TIRED
+  THANKFUL
+  PROUD
+  ANXIOUS
+  UNSURE
+}
+
+enum PraiseType {
+  EMPATHY
+  WELL_DONE
+  COURAGE
+  CONSISTENCY
+  HEART
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  username      String   @unique
+  passwordHash  String
+  nickname      String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  posts         Post[]
+  praises       Praise[] @relation("Praiser")
+
+  sessions      Session[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  authorId    String
+  title       String
+  body        String
+  emotionTag  EmotionTag
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+
+  author      User       @relation(fields: [authorId], references: [id])
+  praises     Praise[]
+  notiAgg     NotificationAggregate?
+}
+
+model Praise {
+  id         String     @id @default(cuid())
+  postId     String
+  praiserId  String
+  type       PraiseType
+  createdAt  DateTime   @default(now())
+
+  post       Post       @relation(fields: [postId], references: [id])
+  praiser    User       @relation("Praiser", fields: [praiserId], references: [id])
+
+  @@unique([postId, praiserId]) // 게시글당 1회 강제
+}
+
+model NotificationAggregate {
+  postId      String   @id
+  authorId    String
+  typesJson   Json
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  seenAt      DateTime?
+
+  post        Post     @relation(fields: [postId], references: [id])
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  tokenHash  String   @unique
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  usedAt    DateTime?
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+
+model RateLimitBucket {
+  key          String   @id
+  windowStart  DateTime
+  count        Int      @default(0)
+  blockedUntil DateTime?
+
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  @@index([blockedUntil])
+  @@index([windowStart])
+}
