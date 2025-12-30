@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { updateNicknameSchema } from "@/app/shared/validators/settings";
-import { updateNickname } from "@/server/services/settings.service";
+import { updateNickname } from "@/server/me/settings.service";
 
 export async function POST(req: Request) {
 	try {

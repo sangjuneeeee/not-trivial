@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/app/shared/validators/auth";
 import { createSession } from "@/server/auth/session";
-import { consumeRateLimit } from "@/server/services/rate-limit.service";
-import { getClientIp } from "@/server/services/request-meta";
+import { consumeRateLimit } from "@/server/auth/rate-limit.service";
+import { getClientIp } from "@/server/auth/request-meta";
 
 export async function POST(req: Request) {
 	try {

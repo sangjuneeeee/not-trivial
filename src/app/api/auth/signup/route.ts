@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { signupSchema } from "@/app/shared/validators/auth";
-import { signup } from "@/server/services/auth.service";
+import { signup } from "@/server/auth/auth.service";
 
 /**
  * POST /api/auth/signup

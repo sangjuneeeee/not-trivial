@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { updatePostSchema } from "@/app/shared/validators/post";
-import { getPost, softDeletePost, updatePost } from "@/server/services/post.service";
+import { getPost, softDeletePost, updatePost } from "@/server/posts/post.service";
 
 type Ctx = { params: Promise<{ id: string }> };
 

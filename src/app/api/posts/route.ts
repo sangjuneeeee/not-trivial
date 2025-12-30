@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { createPostSchema } from "@/app/shared/validators/post";
-import { createPost, listPosts } from "@/server/services/post.service";
+import { createPost, listPosts } from "@/server/posts/post.service";
 
 /**
  * GET /api/posts

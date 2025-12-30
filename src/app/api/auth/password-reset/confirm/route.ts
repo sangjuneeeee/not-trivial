@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { resetPasswordSchema } from "@/app/shared/validators/auth";
-import { resetPassword } from "@/server/services/password-reset.service";
+import { resetPassword } from "@/server/auth/password-reset.service";
 
 export async function POST(req: Request) {
 	try {
