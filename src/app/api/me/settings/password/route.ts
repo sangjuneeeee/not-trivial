@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { requireUser } from "@/server/auth/require-user";
 import { updatePasswordSchema } from "@/app/shared/validators/settings";
-import { updatePasswordAndLogoutAllSessions } from "@/server/services/settings.service";
+import { updatePasswordAndLogoutAllSessions } from "@/server/me/settings.service";
 
 export async function POST(req: Request) {
 	try {

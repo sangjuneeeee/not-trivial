@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { getMe } from "@/server/services/auth.service";
+import { getMe } from "@/server/auth/auth.service";
 
 export async function GET() {
 	try {

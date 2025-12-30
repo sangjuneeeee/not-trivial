@@ -1,6 +1,6 @@
 // src/app/posts/page.tsx
 import Link from "next/link";
-import { listPosts } from "@/server/services/post.service";
+import { listPosts } from "@/server/posts/post.service";
 import { getCurrentUser } from "@/server/auth/get-current-user";
 import { EMOTION_LABEL } from "@/app/shared/emotion";
 
