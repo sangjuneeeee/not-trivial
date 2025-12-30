@@ -15,6 +15,7 @@ export default async function HomePage() {
 				</div>
 
 				<nav className='nav'>
+					<Link href='/posts'>게시글</Link>
 					{user ? (
 						<>
 							<span className='pill'>
