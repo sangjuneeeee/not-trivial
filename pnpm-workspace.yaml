@@ -7,4 +7,9 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - '@prisma/engines'
+  - '@scarf/scarf'
+  - '@tree-sitter-grammars/tree-sitter-yaml'
+  - core-js-pure
   - prisma
+  - tree-sitter
+  - tree-sitter-json
