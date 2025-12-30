@@ -1,8 +1,8 @@
 // src/app/api/posts/[id]/praise/route.ts
 import { NextResponse } from "next/server";
-import { requireUser } from "@/app/server/auth/require-user";
+import { requireUser } from "@/server/auth/require-user";
 import { createPraiseSchema } from "@/app/shared/validators/praise";
-import { createPraiseForPost } from "@/app/server/services/praise.service";
+import { createPraiseForPost } from "@/server/services/praise.service";
 
 type Ctx = { params: Promise<{ id: string }> };
 

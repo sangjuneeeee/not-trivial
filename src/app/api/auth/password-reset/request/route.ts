@@ -1,9 +1,9 @@
 // src/app/api/auth/password-reset/request/route.ts
 import { NextResponse } from "next/server";
 import { requestPasswordResetSchema } from "@/app/shared/validators/auth";
-import { requestPasswordReset } from "@/app/server/services/password-reset.service";
-import { consumeRateLimit } from "@/app/server/services/rate-limit.service";
-import { getClientIp } from "@/app/server/services/request-meta";
+import { requestPasswordReset } from "@/server/services/password-reset.service";
+import { consumeRateLimit } from "@/server/services/rate-limit.service";
+import { getClientIp } from "@/server/services/request-meta";
 
 /**
  * POST /api/auth/password-reset/request

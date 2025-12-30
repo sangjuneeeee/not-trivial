@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { runCleanup } from "@/app/server/services/cleanup.service";
+import { runCleanup } from "@/server/services/cleanup.service";
 
 export async function POST(req: Request) {
 	const secret = req.headers.get("x-internal-secret");

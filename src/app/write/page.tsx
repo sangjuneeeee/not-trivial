@@ -1,7 +1,7 @@
 // src/app/write/page.tsx
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/app/server/auth/get-current-user";
+import { getCurrentUser } from "@/server/auth/get-current-user";
 import PostComposer from "@/app/_components/PostComposer";
 
 export default async function WritePage() {

@@ -1,6 +1,6 @@
 // src/app/api/me/notifications/route.ts
 import { NextResponse } from "next/server";
-import { requireUser } from "@/app/server/auth/require-user";
+import { requireUser } from "@/server/auth/require-user";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {

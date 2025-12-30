@@ -1,7 +1,7 @@
 // src/app/server/auth/get-current-user.ts
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
-import { hashToken } from "@/app/api/auth/token";
+import { hashToken } from "@/server/auth/token";
 
 export async function getCurrentUser() {
 	const store = await cookies();

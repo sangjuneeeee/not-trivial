@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { generateToken, hashToken } from "@/app/api/auth/token";
+import { generateToken, hashToken } from "@/server/auth/token";
 
 const SESSION_EXPIRE_DAYS = 7;
 

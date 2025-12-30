@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { resend, EMAIL_FROM, APP_URL } from "../email/resend";
 import type { RequestPasswordResetInput, ResetPasswordInput } from "@/app/shared/validators/auth";
-import { generateToken, hashToken } from "@/app/api/auth/token";
+import { generateToken, hashToken } from "@/server/auth/token";
 
 /** 비번 재설정 토큰 유효 시간(분) */
 const TOKEN_EXPIRE_MIN = 30;

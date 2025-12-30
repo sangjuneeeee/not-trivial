@@ -1,8 +1,8 @@
 // src/app/api/posts/route.ts
 import { NextResponse } from "next/server";
-import { requireUser } from "@/app/server/auth/require-user";
+import { requireUser } from "@/server/auth/require-user";
 import { createPostSchema } from "@/app/shared/validators/post";
-import { createPost, listPosts } from "@/app/server/services/post.service";
+import { createPost, listPosts } from "@/server/services/post.service";
 
 /**
  * GET /api/posts

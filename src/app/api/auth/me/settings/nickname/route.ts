@@ -1,8 +1,8 @@
 // src/app/api/me/settings/nickname/route.ts
 import { NextResponse } from "next/server";
-import { requireUser } from "@/app/server/auth/require-user";
+import { requireUser } from "@/server/auth/require-user";
 import { updateNicknameSchema } from "@/app/shared/validators/settings";
-import { updateNickname } from "@/app/server/services/settings.service";
+import { updateNickname } from "@/server/services/settings.service";
 
 export async function POST(req: Request) {
 	try {

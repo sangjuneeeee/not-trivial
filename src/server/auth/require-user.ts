@@ -1,7 +1,7 @@
 // src/app/server/auth/require-user.ts
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { hashToken } from "@/app/api/auth/token";
+import { hashToken } from "@/server/auth/token";
 
 /**
  * API(서버)에서 로그인 강제 체크용 헬퍼

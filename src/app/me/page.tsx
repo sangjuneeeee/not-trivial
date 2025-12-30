@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/app/_components/LogoutButton";
-import { getCurrentUser } from "@/app/server/auth/get-current-user";
-import { listMyPosts } from "@/app/server/services/me.service";
+import { getCurrentUser } from "@/server/auth/get-current-user";
+import { listMyPosts } from "@/server/services/me.service";
 import { EMOTION_LABEL } from "@/app/shared/emotion";
 
 export default async function MePage() {

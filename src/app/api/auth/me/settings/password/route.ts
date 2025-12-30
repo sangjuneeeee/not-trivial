@@ -1,9 +1,9 @@
 // src/app/api/me/settings/password/route.ts
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { requireUser } from "@/app/server/auth/require-user";
+import { requireUser } from "@/server/auth/require-user";
 import { updatePasswordSchema } from "@/app/shared/validators/settings";
-import { updatePasswordAndLogoutAllSessions } from "@/app/server/services/settings.service";
+import { updatePasswordAndLogoutAllSessions } from "@/server/services/settings.service";
 
 export async function POST(req: Request) {
 	try {

@@ -1,8 +1,8 @@
 // src/app/posts/[id]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost } from "@/app/server/services/post.service";
-import { getCurrentUser } from "@/app/server/auth/get-current-user";
+import { getPost } from "@/server/services/post.service";
+import { getCurrentUser } from "@/server/auth/get-current-user";
 import { EMOTION_LABEL } from "@/app/shared/emotion";
 import PostActions from "@/app/_components/PostActions";
 import PraiseButtons from "@/app/_components/PraiseButtons";

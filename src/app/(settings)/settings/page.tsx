@@ -1,7 +1,7 @@
 // src/app/(settings)/settings/page.tsx
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/app/server/auth/get-current-user";
+import { getCurrentUser } from "@/server/auth/get-current-user";
 import SettingsForms from "@/app/_components/SettingsForms";
 
 export default async function SettingsPage() {

@@ -1,7 +1,7 @@
 // src/app/page.tsx
 import Link from "next/link";
 import LogoutButton from "@/app/_components/LogoutButton";
-import { getCurrentUser } from "@/app/server/auth/get-current-user";
+import { getCurrentUser } from "@/server/auth/get-current-user";
 
 export default async function HomePage() {
 	const user = await getCurrentUser();
@@ -15,6 +15,7 @@ export default async function HomePage() {
 				</div>
 
 				<nav className='nav'>
+					<Link href='/docs'>API 문서</Link>
 					<Link href='/posts'>게시글</Link>
 					{user ? (
 						<>

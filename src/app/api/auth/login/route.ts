@@ -4,9 +4,9 @@ import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/app/shared/validators/auth";
-import { createSession } from "@/app/api/auth/session";
-import { consumeRateLimit } from "@/app/server/services/rate-limit.service";
-import { getClientIp } from "@/app/server/services/request-meta";
+import { createSession } from "@/server/auth/session";
+import { consumeRateLimit } from "@/server/services/rate-limit.service";
+import { getClientIp } from "@/server/services/request-meta";
 
 export async function POST(req: Request) {
 	try {
