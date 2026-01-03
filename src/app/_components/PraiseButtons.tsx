@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 const PRAISE_LABEL: Record<string, string> = {
 	EMPATHY: "공감돼요",
@@ -42,23 +44,40 @@ export default function PraiseButtons({ postId }: { postId: string }) {
 	};
 
 	return (
-		<div className='box'>
-			<h1 style={{ marginTop: 0 }}>칭찬하기</h1>
-			<p>한 게시글에는 1번만 칭찬할 수 있어요. (그리고 하루 횟수 제한이 있습니다)</p>
+		<Card className='border-blue-100 bg-gradient-to-br from-blue-50/50 to-blue-50/30'>
+			<div className='mb-4'>
+				<h2 className='text-lg font-semibold mb-1 text-zinc-900'>칭찬하기</h2>
+				<p className='text-xs text-zinc-600'>
+					한 게시글에는 1번만 칭찬할 수 있어요. 하루 5번까지 가능합니다.
+				</p>
+			</div>
 
-			<div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+			<div className='flex flex-wrap gap-2 mb-4'>
 				{PRAISE_TYPES.map((t) => (
-					<button key={t} onClick={() => send(t)} disabled={!!busy}>
+					<Button
+						key={t}
+						onClick={() => send(t)}
+						disabled={!!busy}
+						variant='secondary'
+						size='sm'
+						className='whitespace-nowrap'
+					>
 						{busy === t ? "전송 중..." : PRAISE_LABEL[t]}
-					</button>
+					</Button>
 				))}
 			</div>
 
 			{msg && (
-				<div className='notice' style={{ marginTop: 12 }}>
+				<div
+					className={`p-3 rounded-xl border text-sm transition-all ${
+						msg.includes("실패") || msg.includes("오류")
+							? "bg-red-50 border-red-200 text-red-700"
+							: "bg-green-50 border-green-200 text-green-700"
+					}`}
+				>
 					{msg}
 				</div>
 			)}
-		</div>
+		</Card>
 	);
 }

@@ -22,7 +22,7 @@ export async function requireUser() {
 		where: { tokenHash },
 		select: {
 			expiresAt: true,
-			user: { select: { id: true, nickname: true } },
+			user: { select: { id: true, nickname: true, badgeLevel: true } },
 		},
 	});
 

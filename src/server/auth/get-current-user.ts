@@ -14,7 +14,7 @@ export async function getCurrentUser() {
 		where: { tokenHash },
 		select: {
 			expiresAt: true,
-			user: { select: { id: true, username: true, email: true, nickname: true } },
+			user: { select: { id: true, username: true, email: true, nickname: true, badgeLevel: true } },
 		},
 	});
 
