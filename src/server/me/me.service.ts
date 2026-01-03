@@ -9,8 +9,15 @@ export async function listMyPosts(userId: string) {
 		select: {
 			id: true,
 			title: true,
+			body: true,
 			emotionTag: true,
 			createdAt: true,
+			author: {
+				select: {
+					id: true,
+					nickname: true,
+				},
+			},
 		},
 	});
 }

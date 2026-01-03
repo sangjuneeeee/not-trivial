@@ -1,7 +1,9 @@
 // src/app/(settings)/settings/page.tsx
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/server/auth/get-current-user";
+import { Container } from "@/components/layout/Container";
+import { Card } from "@/components/ui/Card";
+import AppHeader from "@/components/layout/AppHeader";
 import SettingsForms from "@/app/_components/SettingsForms";
 
 export default async function SettingsPage() {
@@ -9,23 +11,18 @@ export default async function SettingsPage() {
 	if (!user) redirect("/login");
 
 	return (
-		<div className='container'>
-			<header>
-				<h1>계정 설정</h1>
-				<nav>
-					<Link href='/'>홈</Link>
-					<Link href='/me'>마이페이지</Link>
-					<Link href='/me/notifications'>알림</Link>
-				</nav>
-			</header>
+		<main className='min-h-dvh bg-zinc-50 text-zinc-900'>
+			<AppHeader />
+			<Container className='py-8'>
+				<div className='mb-6'>
+					<h1 className='text-2xl font-semibold mb-2'>계정 설정</h1>
+					<p className='text-sm text-zinc-600'>
+						비밀번호를 변경하면 보안을 위해 자동으로 로그아웃됩니다.
+					</p>
+				</div>
 
-			<div className='box'>
-				<p>
-					로그인한 상태에서만 접근 가능합니다. 비밀번호를 변경하면 보안을 위해 자동 로그아웃됩니다.
-				</p>
-			</div>
-
-			<SettingsForms initialNickname={user.nickname} />
-		</div>
+				<SettingsForms initialNickname={user.nickname} />
+			</Container>
+		</main>
 	);
 }

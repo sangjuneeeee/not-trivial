@@ -1,6 +1,7 @@
 // src/app/server/services/praise.service.ts
 import { prisma } from "@/lib/prisma";
 import type { CreatePraiseInput } from "@/app/shared/validators/praise";
+import { updateUserBadge } from "@/server/badge/badge.service";
 
 /**
  * 일일 칭찬 제한
@@ -116,6 +117,11 @@ export async function createPraiseForPost(params: {
 			}
 
 			return { praiseId: praise.id };
+		});
+
+		// 5) 배지 업데이트 (비동기, 실패해도 칭찬은 성공)
+		updateUserBadge(praiserId).catch((err) => {
+			console.error("[updateUserBadge] error:", err);
 		});
 
 		return { ok: true as const, praiseId: result.praiseId };

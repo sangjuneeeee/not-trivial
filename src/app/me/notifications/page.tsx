@@ -1,8 +1,9 @@
 // src/app/me/notifications/page.tsx
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/server/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
+import { Container } from "@/components/layout/Container";
+import AppHeader from "@/components/layout/AppHeader";
 import NotificationList from "@/app/_components/NotificationList";
 
 export default async function MyNotificationsPage() {
@@ -32,17 +33,11 @@ export default async function MyNotificationsPage() {
 	}));
 
 	return (
-		<div className='container'>
-			<header>
-				<h1>알림</h1>
-				<nav>
-					<Link href='/'>홈</Link>
-					<Link href='/me'>마이페이지</Link>
-					<Link href='/posts'>게시글</Link>
-				</nav>
-			</header>
-
-			<NotificationList items={safeItems} />
-		</div>
+		<main className='min-h-dvh bg-zinc-50 text-zinc-900'>
+			<AppHeader />
+			<Container className='py-8'>
+				<NotificationList items={safeItems} />
+			</Container>
+		</main>
 	);
 }

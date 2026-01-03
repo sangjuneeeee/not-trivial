@@ -44,8 +44,16 @@ export async function signup(input: SignupInput) {
 			username: input.username,
 			passwordHash,
 			nickname: makeRandomNickname(),
+			badgeLevel: "SEED",
 		},
-		select: { id: true, email: true, username: true, nickname: true, createdAt: true },
+		select: {
+			id: true,
+			email: true,
+			username: true,
+			nickname: true,
+			badgeLevel: true,
+			createdAt: true,
+		},
 	});
 
 	return { ok: true as const, status: 201, user };
@@ -95,6 +103,7 @@ export async function login(input: LoginInput) {
 		email: user.email,
 		username: user.username,
 		nickname: user.nickname,
+		badgeLevel: user.badgeLevel,
 	};
 
 	return { ok: true as const, status: 200, token, expiresAt, user: safeUser };
@@ -107,7 +116,7 @@ export async function getMe(sessionToken: string) {
 		where: { tokenHash },
 		select: {
 			expiresAt: true,
-			user: { select: { id: true, email: true, username: true, nickname: true } },
+			user: { select: { id: true, email: true, username: true, nickname: true, badgeLevel: true } },
 		},
 	});
 

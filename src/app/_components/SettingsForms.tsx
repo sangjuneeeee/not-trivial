@@ -11,6 +11,10 @@ import {
 	updatePasswordSchema,
 	type UpdatePasswordInput,
 } from "@/app/shared/validators/settings";
+import { Card } from "@/components/ui/Card";
+import { Field } from "@/components/ui/Field";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export default function SettingsForms({ initialNickname }: { initialNickname: string }) {
 	const router = useRouter();
@@ -72,62 +76,104 @@ export default function SettingsForms({ initialNickname }: { initialNickname: st
 	};
 
 	return (
-		<>
-			<div className='box'>
-				<h1 style={{ marginTop: 0 }}>닉네임 변경</h1>
-				{nickMsg && <div className='notice'>{nickMsg}</div>}
-
-				<form onSubmit={nickForm.handleSubmit(onSubmitNickname)}>
-					<div>
-						<label>닉네임</label>
-						<input {...nickForm.register("nickname")} />
-						{nickForm.formState.errors.nickname && (
-							<div className='error'>{nickForm.formState.errors.nickname.message}</div>
-						)}
+		<div className='space-y-6'>
+			<Card>
+				<div className='mb-4'>
+					<h2 className='text-lg font-semibold mb-1'>닉네임 변경</h2>
+					<p className='text-xs text-zinc-600'>다른 사람에게 보이는 이름을 변경할 수 있습니다.</p>
+				</div>
+				{nickMsg && (
+					<div
+						className={`mb-4 p-3 rounded-xl border text-sm ${
+							nickMsg.includes("실패") || nickMsg.includes("오류")
+								? "bg-red-50 border-red-200 text-red-700"
+								: "bg-green-50 border-green-200 text-green-700"
+						}`}
+					>
+						{nickMsg}
 					</div>
+				)}
 
-					<button className='primary' disabled={nickForm.formState.isSubmitting}>
+				<form onSubmit={nickForm.handleSubmit(onSubmitNickname)} className='space-y-6'>
+					<Field label='닉네임' error={nickForm.formState.errors.nickname?.message}>
+						<Input
+							{...nickForm.register("nickname")}
+							error={nickForm.formState.errors.nickname?.message}
+						/>
+					</Field>
+
+					<Button
+						type='submit'
+						disabled={nickForm.formState.isSubmitting}
+						className='w-full'
+						size='lg'
+					>
 						{nickForm.formState.isSubmitting ? "처리 중..." : "닉네임 변경"}
-					</button>
+					</Button>
 				</form>
-			</div>
+			</Card>
 
-			<div className='box'>
-				<h1 style={{ marginTop: 0 }}>비밀번호 변경</h1>
-				<p className='help'>비밀번호 변경 시 보안을 위해 모든 세션이 로그아웃됩니다.</p>
+			<Card>
+				<div className='mb-4'>
+					<h2 className='text-lg font-semibold mb-1'>비밀번호 변경</h2>
+					<p className='text-xs text-zinc-600'>
+						비밀번호 변경 시 보안을 위해 모든 세션이 로그아웃됩니다.
+					</p>
+				</div>
 
-				{pwMsg && <div className='notice'>{pwMsg}</div>}
-
-				<form onSubmit={pwForm.handleSubmit(onSubmitPassword)}>
-					<div>
-						<label>현재 비밀번호</label>
-						<input type='password' {...pwForm.register("currentPassword")} />
-						{pwForm.formState.errors.currentPassword && (
-							<div className='error'>{pwForm.formState.errors.currentPassword.message}</div>
-						)}
+				{pwMsg && (
+					<div
+						className={`mb-4 p-3 rounded-xl border text-sm ${
+							pwMsg.includes("실패") || pwMsg.includes("오류")
+								? "bg-red-50 border-red-200 text-red-700"
+								: "bg-green-50 border-green-200 text-green-700"
+						}`}
+					>
+						{pwMsg}
 					</div>
+				)}
 
-					<div>
-						<label>새 비밀번호</label>
-						<input type='password' {...pwForm.register("newPassword")} />
-						{pwForm.formState.errors.newPassword && (
-							<div className='error'>{pwForm.formState.errors.newPassword.message}</div>
-						)}
-					</div>
+				<form onSubmit={pwForm.handleSubmit(onSubmitPassword)} className='space-y-6'>
+					<Field label='현재 비밀번호' error={pwForm.formState.errors.currentPassword?.message}>
+						<Input
+							type='password'
+							{...pwForm.register("currentPassword")}
+							placeholder='••••••••'
+							error={pwForm.formState.errors.currentPassword?.message}
+						/>
+					</Field>
 
-					<div>
-						<label>새 비밀번호 확인</label>
-						<input type='password' {...pwForm.register("newPasswordConfirm")} />
-						{pwForm.formState.errors.newPasswordConfirm && (
-							<div className='error'>{pwForm.formState.errors.newPasswordConfirm.message}</div>
-						)}
-					</div>
+					<Field label='새 비밀번호' error={pwForm.formState.errors.newPassword?.message}>
+						<Input
+							type='password'
+							{...pwForm.register("newPassword")}
+							placeholder='••••••••'
+							error={pwForm.formState.errors.newPassword?.message}
+						/>
+					</Field>
 
-					<button className='primary' disabled={pwForm.formState.isSubmitting}>
+					<Field
+						label='새 비밀번호 확인'
+						error={pwForm.formState.errors.newPasswordConfirm?.message}
+					>
+						<Input
+							type='password'
+							{...pwForm.register("newPasswordConfirm")}
+							placeholder='••••••••'
+							error={pwForm.formState.errors.newPasswordConfirm?.message}
+						/>
+					</Field>
+
+					<Button
+						type='submit'
+						disabled={pwForm.formState.isSubmitting}
+						className='w-full'
+						size='lg'
+					>
 						{pwForm.formState.isSubmitting ? "처리 중..." : "비밀번호 변경"}
-					</button>
+					</Button>
 				</form>
-			</div>
-		</>
+			</Card>
+		</div>
 	);
 }

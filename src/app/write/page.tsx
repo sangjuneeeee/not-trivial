@@ -1,7 +1,8 @@
 // src/app/write/page.tsx
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/server/auth/get-current-user";
+import { Container } from "@/components/layout/Container";
+import AppHeader from "@/components/layout/AppHeader";
 import PostComposer from "@/app/_components/PostComposer";
 
 export default async function WritePage() {
@@ -9,16 +10,11 @@ export default async function WritePage() {
 	if (!user) redirect("/login");
 
 	return (
-		<div className='container'>
-			<header>
-				<h1>글 쓰기</h1>
-				<nav>
-					<Link href='/'>홈</Link>
-					<Link href='/posts'>목록</Link>
-				</nav>
-			</header>
-
-			<PostComposer />
-		</div>
+		<main className='min-h-dvh bg-zinc-50 text-zinc-900'>
+			<AppHeader />
+			<Container className='py-8'>
+				<PostComposer />
+			</Container>
+		</main>
 	);
 }
