@@ -3,10 +3,14 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { createPraiseSchema } from "@/app/shared/validators/praise";
 import { createPraiseForPost } from "@/server/praise/praise.service";
+import { assertSameOrigin } from "@/server/auth/csrf";
 
 type Ctx = { params: Promise<{ id: string }> };
 
 export async function POST(req: Request, ctx: Ctx) {
+	const blocked = assertSameOrigin(req);
+	if (blocked) return blocked;
+
 	try {
 		const auth = await requireUser();
 		if (!auth.ok) {

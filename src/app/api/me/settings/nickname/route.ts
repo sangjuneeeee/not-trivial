@@ -3,8 +3,12 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { updateNicknameSchema } from "@/app/shared/validators/settings";
 import { updateNickname } from "@/server/me/settings.service";
+import { assertSameOrigin } from "@/server/auth/csrf";
 
 export async function POST(req: Request) {
+	const blocked = assertSameOrigin(req);
+	if (blocked) return blocked;
+
 	try {
 		const auth = await requireUser();
 		if (!auth.ok) return NextResponse.json({ message: auth.message }, { status: auth.status });

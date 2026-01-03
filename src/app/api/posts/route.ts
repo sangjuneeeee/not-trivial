@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { createPostSchema } from "@/app/shared/validators/post";
 import { createPost, listPosts } from "@/server/posts/post.service";
+import { assertSameOrigin } from "@/server/auth/csrf";
 
 /**
  * GET /api/posts
@@ -10,6 +11,9 @@ import { createPost, listPosts } from "@/server/posts/post.service";
  * - 로그인 없어도 공개로 두는 게 MVP에선 자연스러움
  */
 export async function GET(req: Request) {
+	const blocked = assertSameOrigin(req);
+	if (blocked) return blocked;
+
 	try {
 		const url = new URL(req.url);
 		const take = Number(url.searchParams.get("take") ?? "20");

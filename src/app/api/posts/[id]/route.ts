@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/server/auth/require-user";
 import { updatePostSchema } from "@/app/shared/validators/post";
 import { getPost, softDeletePost, updatePost } from "@/server/posts/post.service";
+import { assertSameOrigin } from "@/server/auth/csrf";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -12,6 +13,9 @@ type Ctx = { params: Promise<{ id: string }> };
  * - 공개 가능
  */
 export async function GET(_req: Request, ctx: Ctx) {
+	const blocked = assertSameOrigin(_req);
+	if (blocked) return blocked;
+
 	try {
 		const { id } = await ctx.params;
 
