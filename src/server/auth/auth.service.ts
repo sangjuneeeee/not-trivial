@@ -1,3 +1,4 @@
+// src/app/server/services/auth.service.ts
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
@@ -103,7 +104,6 @@ export async function login(input: LoginInput) {
 		email: user.email,
 		username: user.username,
 		nickname: user.nickname,
-		badgeLevel: user.badgeLevel,
 	};
 
 	return { ok: true as const, status: 200, token, expiresAt, user: safeUser };

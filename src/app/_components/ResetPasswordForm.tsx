@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,16 +20,23 @@ export default function ResetPasswordForm() {
 
 	const [serverMsg, setServerMsg] = useState<string | null>(null);
 
+	// ✅ 초기값(토큰 포함)
 	const defaultValues = useMemo(() => ({ token, password: "", passwordConfirm: "" }), [token]);
 
 	const {
 		register,
 		handleSubmit,
+		reset, // ✅ token 변경/초기화에 쓰기
 		formState: { errors, isSubmitting },
 	} = useForm<ResetPasswordInput>({
 		resolver: zodResolver(resetPasswordSchema),
 		defaultValues,
 	});
+
+	// ✅ token이 바뀌거나 처음 로딩될 때 폼에 반영(정석)
+	useEffect(() => {
+		reset({ token, password: "", passwordConfirm: "" });
+	}, [token, reset]);
 
 	const onSubmit = async (values: ResetPasswordInput) => {
 		setServerMsg(null);
@@ -55,6 +62,9 @@ export default function ResetPasswordForm() {
 		}, 700);
 	};
 
+	// ✅ token이 아예 없으면(직접 URL 접근) 안내
+	const tokenMissing = !token;
+
 	return (
 		<Card className='max-w-md mx-auto'>
 			<h1 className='text-2xl font-semibold mb-2'>비밀번호 재설정</h1>
@@ -62,6 +72,12 @@ export default function ResetPasswordForm() {
 				메일 링크의 토큰으로 비밀번호를 변경합니다. 토큰은 30분만 유효하며, 성공 시 모든 세션이
 				로그아웃됩니다.
 			</p>
+
+			{tokenMissing && (
+				<div className='mb-4 p-3 rounded-xl border text-sm bg-amber-50 border-amber-200 text-amber-800'>
+					토큰이 없습니다. 메일로 받은 링크로 다시 접속해주세요.
+				</div>
+			)}
 
 			{serverMsg && (
 				<div
@@ -81,7 +97,13 @@ export default function ResetPasswordForm() {
 					error={errors.token?.message}
 					hint='메일 링크로 접속하면 자동으로 채워집니다'
 				>
-					<Input {...register("token")} error={errors.token?.message} />
+					{/* ✅ 토큰은 “보여주되 수정 불가”가 보통 더 안전/친절합니다 */}
+					<Input
+						{...register("token")}
+						error={errors.token?.message}
+						readOnly
+						className='font-mono text-xs'
+					/>
 				</Field>
 
 				<Field label='새 비밀번호' error={errors.password?.message}>
@@ -90,6 +112,7 @@ export default function ResetPasswordForm() {
 						{...register("password")}
 						placeholder='••••••••'
 						error={errors.password?.message}
+						disabled={tokenMissing}
 					/>
 				</Field>
 
@@ -99,11 +122,17 @@ export default function ResetPasswordForm() {
 						{...register("passwordConfirm")}
 						placeholder='••••••••'
 						error={errors.passwordConfirm?.message}
+						disabled={tokenMissing}
 					/>
 				</Field>
 
 				<div className='flex flex-col gap-3 pt-2'>
-					<Button type='submit' disabled={isSubmitting} className='w-full' size='lg'>
+					<Button
+						type='submit'
+						disabled={isSubmitting || tokenMissing}
+						className='w-full'
+						size='lg'
+					>
 						{isSubmitting ? "처리 중..." : "비밀번호 변경"}
 					</Button>
 
